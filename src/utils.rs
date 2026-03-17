@@ -4,7 +4,7 @@ pub mod utils {
     use rand::prelude::*;
     use rand::seq::IteratorRandom;
 
-    pub fn wait(seconds: u32) {
+    pub fn wait(seconds: f32) {
         let mut child = Command::new("sleep").arg(format!("{seconds}")).spawn().unwrap();
         let _result = child.wait().unwrap();
     }
@@ -24,7 +24,7 @@ pub mod utils {
 
     pub fn splash_message() -> String {
         let messages: Vec<String> = vec![
-            String::from("welcome to terminal gambler"),
+            String::from("the ultimate casino experience"),
             String::from("let's go gambling!"),
             String::from("99% of gamblers quit before they win big"),
             String::from("i sure hope you brought a lot of money!"),

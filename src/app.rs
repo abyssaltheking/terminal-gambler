@@ -1,9 +1,9 @@
 pub mod app {
-    use std::io;
+    use std::{io, num::ParseIntError};
 
     use clearscreen::clear;
 
-    use crate::utils::utils::{wait, wait_for_input};
+    use crate::utils::utils::{wait, wait_for_input, random_int_from_range};
 
     pub struct Player {
         name: String,
@@ -24,9 +24,9 @@ pub mod app {
             money: 1000 
         };
 
-        wait(5);
+        wait(3.0);
         println!("All set! You're ready to start gambling!");
-        wait(2);
+        wait(1.5);
 
         Ok(player)
     }
@@ -36,9 +36,9 @@ pub mod app {
         println!("Enter a command to play!");
 
         println!("\nAvailable commands:");
-        println!("- coinflip [amount] [heads/tails]");
-        println!("- blackjack [amount]");
-        println!("- slots [amount]");
+        println!("- coinflip [bet, max 1000] [heads/tails]");
+        println!("- blackjack [bet]");
+        println!("- slots [bet]");
         println!("- stats");
         println!("- quit\n");
 
@@ -53,5 +53,55 @@ pub mod app {
 
         println!("\nPress enter to return back to the menu.");
         wait_for_input();
+    }
+
+    pub fn coinflip(player: &mut Player, amount_raw: &str, heads_or_tails_raw: &str) {
+        let amount: i32 = amount_raw.parse::<i32>().unwrap();
+
+        if &amount < &0 || &amount > &1000 {
+            return
+        }
+
+        let chose_heads: bool = match heads_or_tails_raw {
+            "heads" => true,
+            "tails" => false,
+            _ => return
+        };
+
+        let result: bool = random_int_from_range(0, 1) == 0;
+        let mut coin: bool = random_int_from_range(0, 1) == 0;
+        let mut timer: f32 = 0.0;
+
+        while timer < 2.0 {
+            clear().expect("failed to clear");
+            timer += 0.05;
+
+            match coin {
+                true => println!("heads"),
+                false => println!("tails")
+            }
+
+            coin = !coin;
+            wait(0.05);
+        }
+
+        clear().expect("failed to clear");
+
+        match result {
+            true => println!("heads"),
+            false => println!("tails")
+        }
+
+        wait(1.5);
+
+        if result == chose_heads {
+            println!("Congratulations! You won ${}", &amount);
+            player.money += amount;
+        } else {
+            println!("Not this time! Keep playing to win!");
+            player.money -= amount;
+        }
+
+        wait(2.0);
     }
 }
