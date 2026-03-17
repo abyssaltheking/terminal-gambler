@@ -23,8 +23,15 @@ fn main() {
         let command: String = menu();
         let broken_down_command: Vec<&str> = command.trim().split(' ').collect();
 
+
         match broken_down_command[0] {
-            "coinflip" => coinflip(&mut player, broken_down_command[1], broken_down_command[2]),
+            "coinflip" => {
+                if broken_down_command.len() == 3 {
+                    coinflip(&mut player, broken_down_command[1], broken_down_command[2]);
+                }
+
+                continue
+            },
             "blackjack" => todo!(),
             "slots" => todo!(),
             "stats" => stats(&player),

@@ -56,9 +56,9 @@ pub mod app {
     }
 
     pub fn coinflip(player: &mut Player, amount_raw: &str, heads_or_tails_raw: &str) {
-        let amount: i32 = amount_raw.parse::<i32>().unwrap();
+        let amount: i32 = amount_raw.parse::<i32>().unwrap_or(0);
 
-        if &amount < &0 || &amount > &1000 {
+        if &amount < &1 || &amount > &1000 {
             return
         }
 
@@ -103,5 +103,13 @@ pub mod app {
         }
 
         wait(2.0);
+    }
+
+    fn blackjack() {
+
+    }
+
+    fn slots(player: &mut Player, amount_raw: &str) {
+
     }
 }
