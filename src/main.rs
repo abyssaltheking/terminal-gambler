@@ -1,20 +1,13 @@
-use ratatui::{DefaultTerminal, Frame};
+use clearscreen::clear;
+use crate::utils::utils::{wait, splash_message};
+use crate::app::app::{init};
 
-fn main() -> color_eyre::Result<()> {
-    color_eyre::install()?;
-    ratatui::run(app)?;
-    Ok(())
-}
+mod utils;
+mod app;
 
-fn app(terminal: &mut DefaultTerminal) -> std::io::Result<()> {
-    loop {
-        terminal.draw(render)?;
-        if crossterm::event::read()?.is_key_press() {
-            break Ok(())
-        }
-    }
-}
-
-fn render(frame: &mut Frame) {
-    frame.render_widget("terminal gambler", frame.area());
+fn main() {
+    clear().expect("failure to clear screen");
+    println!("{}", splash_message());
+    wait(3);
+    let player = init();
 }
