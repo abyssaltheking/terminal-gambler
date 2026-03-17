@@ -2,7 +2,7 @@
 
 > ***it's like gambling but in the terminal***<br>
 
-*- bob the dragon*s
+*- bob the dragon*
 
 <hr>
 

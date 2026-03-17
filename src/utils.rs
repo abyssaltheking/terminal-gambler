@@ -1,4 +1,5 @@
 pub mod utils {
+    use std::io;
     use std::process::Command;
     use rand::prelude::*;
     use rand::seq::IteratorRandom;
@@ -11,6 +12,14 @@ pub mod utils {
     pub fn random_int_from_range(min: i32, max: i32) -> i32 {
         let mut rng: ThreadRng = rand::rng();
         rng.random_range(min..=max)
+    }
+
+    pub fn wait_for_input() -> String {
+        let mut input = String::new();
+        match io::stdin().read_line(&mut input) {
+            Ok(..) => input,
+            Err(error) => panic!("error: {error}")
+        }
     }
 
     pub fn splash_message() -> String {
