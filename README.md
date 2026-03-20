@@ -21,8 +21,8 @@ Numbers 2-7 are rolled for 4 seconds. Once finished, if a row ends up having all
 You run <code>slots</code> <code>100</code>
 
 Results end up being:<br> 
-<code>3 3 3<br></code>
-<code>5 4 7<br></code>
+<code>3 3 3</code><br>
+<code>5 4 7</code><br>
 <code>6 6 6</code>
 
 This equation ends up being applied, since both the top and bottom row had one of the same numbers per row:<br>
