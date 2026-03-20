@@ -166,6 +166,7 @@ pub mod app {
         wait(1.0);
 
         let mut player_cards_value: i32 = 0;
+
         for card in &player_cards {
             player_cards_value += card;
         }
