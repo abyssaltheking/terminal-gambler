@@ -1,11 +1,11 @@
 pub mod utils {
     use std::io;
-    use std::process::Command;
+    use std::thread::sleep;
+    use std::time::Duration;
     use rand::prelude::*;
 
     pub fn wait(seconds: f32) {
-        let mut child = Command::new("sleep").arg(format!("{seconds}")).spawn().unwrap();
-        let _result = child.wait().unwrap();
+        sleep(Duration::from_secs_f32(seconds));
     }
 
     pub fn random_int_from_range(min: i32, max: i32) -> i32 {
