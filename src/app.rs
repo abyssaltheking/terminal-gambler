@@ -1,5 +1,5 @@
 pub mod app {
-    use std::{io};
+    use std::{io, vec};
 
     use clearscreen::clear;
 
@@ -7,7 +7,7 @@ pub mod app {
 
     pub struct Player {
         name: String,
-        money: i32,
+        pub(crate) money: i32,
         wins: u32,
         biggest_win: i32,
         losses: u32,
@@ -44,9 +44,9 @@ pub mod app {
         println!("Enter a command to play!");
 
         println!("\nAvailable commands:");
-        println!("- coinflip [bet, max 1000] [heads/tails]");
-        println!("- blackjack [bet]");
-        println!("- slots [bet, max 100000]");
+        println!("- coinflip [bet, max 1k] [heads/tails]");
+        println!("- blackjack [bet, max 10k]");
+        println!("- slots [bet, max 100k]");
         println!("- stats");
         println!("- quit\n");
 
@@ -127,8 +127,78 @@ pub mod app {
         wait(2.0);
     }
 
-    pub fn blackjack() {
+    pub fn blackjack(player: &mut Player, bet_raw: &str) {
+        let bet: i32 = bet_raw.parse::<i32>().unwrap_or(0);
 
+        if &bet < &1 || &bet > &10000 {
+            return
+        }
+
+        let mut player_cards: Vec<i32> = vec![random_int_from_range(1, 10), random_int_from_range(1, 10)];
+        let dealer_cards: Vec<i32> = vec![random_int_from_range(1, 10), random_int_from_range(1, 10)];
+
+        loop {
+            clear().expect("failed to clear");
+            println!("Your cards:");
+            for card in &player_cards {
+                print!("{}   ", card);
+            }
+            println!("\nDealer's cards:");
+            println!("?   {}\n", dealer_cards[1]);
+            println!("Enter either \"hit\" for another card or \"stand\" to reveal the dealer's other card and end the game.");
+
+            let input = wait_for_input();
+
+            match input.trim() {
+                "hit" => player_cards.push(random_int_from_range(1, 10)),
+                "stand" => break,
+                _ => continue
+            }
+        }
+
+        clear().expect("failed to clear");
+        println!("Your cards:");
+        for card in &player_cards {
+            print!("{}   ", card);
+        }
+        println!("\nDealer's cards:");
+        println!("{}   {}\n", dealer_cards[0], dealer_cards[1]);
+        wait(1.0);
+
+        let mut player_cards_value: i32 = 0;
+        for card in &player_cards {
+            player_cards_value += card;
+        }
+
+        let dealer_cards_value: i32 = dealer_cards[0] + dealer_cards[1];
+
+        println!("Your card value: {}", player_cards_value);
+        wait(1.0);
+        println!("Dealer's card value: {}", dealer_cards_value);
+        wait(2.5);
+
+        clear().expect("failed to clear");
+        if player_cards_value < dealer_cards_value || player_cards_value > 20 {
+            println!("Not this time! Keep playing to win!");
+            player.losses += 1;
+            player.money -= &bet;
+            
+            if &bet > &player.biggest_loss {
+                player.biggest_loss = bet
+            }
+        } else if player_cards_value == dealer_cards_value {
+            println!("You tied! Neither a win or a loss.");
+        } else {
+            println!("Congratulations! You won ${}", &bet * 2);
+            player.wins += 1;
+            player.money += bet * 2;
+
+            if &bet > &player.biggest_win {
+                player.biggest_win = bet
+            }
+        }
+
+        wait(2.0);
     }
 
     pub fn slots(player: &mut Player, bet_raw: &str) {
