@@ -28,5 +28,5 @@ Results end up being:<br>
 This equation ends up being applied, since both the top and bottom row had one of the same numbers per row:<br>
 <code>winnings = bet * (3 + 6)</code>
 
-So you end up winning $1800 from a single $100 spin. Lucky you!
+So you end up winning $900 from a single $100 spin. Lucky you!
 </details>
