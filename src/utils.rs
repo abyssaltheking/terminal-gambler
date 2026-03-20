@@ -2,7 +2,6 @@ pub mod utils {
     use std::io;
     use std::process::Command;
     use rand::prelude::*;
-    use rand::seq::IteratorRandom;
 
     pub fn wait(seconds: f32) {
         let mut child = Command::new("sleep").arg(format!("{seconds}")).spawn().unwrap();

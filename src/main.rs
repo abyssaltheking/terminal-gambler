@@ -1,16 +1,9 @@
 use clearscreen::clear;
 use crate::utils::utils::{wait, splash_message};
-use crate::app::app::{coinflip, init, menu, stats};
+use crate::app::app::{blackjack, coinflip, init, menu, slots, stats};
 
 mod utils;
 mod app;
-
-enum State {
-    Menu,
-    Coinflip,
-    Blackjack,
-    Slots
-}
 
 fn main() {
     clear().expect("failed to clear");
@@ -23,7 +16,6 @@ fn main() {
         let command: String = menu();
         let broken_down_command: Vec<&str> = command.trim().split(' ').collect();
 
-
         match broken_down_command[0] {
             "coinflip" => {
                 if broken_down_command.len() == 3 {
@@ -32,8 +24,14 @@ fn main() {
 
                 continue
             },
-            "blackjack" => todo!(),
-            "slots" => todo!(),
+            "blackjack" => blackjack(),
+            "slots" => {
+                if broken_down_command.len() == 2 {
+                    slots(&mut player, broken_down_command[1]);
+                }
+                
+                continue
+            },
             "stats" => stats(&player),
             "quit" => break,
             _ => continue
