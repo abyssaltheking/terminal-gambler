@@ -8,6 +8,19 @@
 
 Terminal Gambler is the ultimate casino experience that you can experience right at home, in your terminal! Play slots, blackjack, and coinflip, all in the comfort of your own terminal. No window managers needed for this. As a bonus, it was made in Rust to make sure that even the slowest systems have no slowdown when it comes to committing to your gambling addiction.
 
+## Installation
+Start by navigating to the **Releases** section on the right, and click the most recent one.
+
+### Windows
+Download `terminal-gambler.exe`, then double click it and it should open command prompt or powershell. If double-clicking it doesn't work, open command prompt and enter `./terminal-gambler.exe` in your *Downloads* folder
+
+### Linux
+Download `terminal-gambler`, then navigate to your *Downloads* folder in your terminal, then enter:
+```sh
+chmod +x terminal-gambler
+./terminal-gambler
+```
+
 ## Games
 - `coinflip` `bet, max 1k` `heads/tails`<br>
 Simple coinflip, make a bet on which side it'll be and if you're right you get 2x your bet back.
